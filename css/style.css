@@ -194,3 +194,20 @@ footer {
 .hero {
   height: 100vh;
   background: url("../images
+    .social-links a {
+  font-size: 32px;
+  margin: 0 8px;
+  transition: 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.15);
+}
+
+.social-links .fa-facebook {
+  color: #1877f2;
+}
+
+.social-links .fa-youtube {
+  color: #ff0000;
+}
