@@ -192,13 +192,15 @@ footer {
     display:flex;
     justify-content:center;
     align-items:center;
-    transition:0.3s;
+    overflow:hidden;
+    text-decoration:none;
 }
 
 .social-links svg {
     width:22px;
     height:22px;
-    fill:white;
+    fill:#ffffff;
+    display:block;
 }
 
 .social-links a:first-child {
