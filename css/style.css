@@ -194,20 +194,30 @@ footer {
 .hero {
   height: 100vh;
   background: url("../images
-    .social-links a {
-  font-size: 32px;
-  margin: 0 8px;
-  transition: 0.3s ease;
+    
+    .social-links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.social-links a {
+    font-size: 36px;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .social-links a:hover {
-  transform: scale(1.15);
+    transform: scale(1.15);
+    opacity: 0.9;
 }
 
 .social-links .fa-facebook {
-  color: #1877f2;
+    color: #1877F2;
 }
 
 .social-links .fa-youtube {
-  color: #ff0000;
+    color: #FF0000;
 }
