@@ -7,7 +7,7 @@ const albumsData = [
   {
     id: "school",
     title: "School Life",
-    cover: "images/1.jpg",          // ← এখানে তোমার কভার ছবির নাম দাও
+    cover: "images/cover1.jpg",          // ← এখানে তোমার কভার ছবির নাম দাও
     photos: [
       { src: "images/1.jpg", title: "School Life 1" },
       { src: "images/2.jpg", title: "School Life 2" },
@@ -18,8 +18,8 @@ const albumsData = [
   },
   {
     id: "farewell",
-    title: "Farewell 2025",
-    cover: "images/5.jpg",
+    title: "Farewell 2k25",
+    cover: "images/cover2.jpg",
     photos: [
       { src: "images/5.jpg", title: "Farewell 1" },
       { src: "images/6.jpg", title: "Farewell 2" },
@@ -29,7 +29,7 @@ const albumsData = [
   {
     id: "teachers",
     title: "Teachers",
-    cover: "images/8.jpg",
+    cover: "images/cover3.jpg",
     photos: [
       { src: "images/8.jpg", title: "Teachers 1" },
       { src: "images/9.jpg", title: "Teachers 2" },
@@ -38,7 +38,7 @@ const albumsData = [
   {
     id: "sports",
     title: "Sports",
-    cover: "images/10.jpg",
+    cover: "images/cover4.jpg",
     photos: [
       { src: "images/10.jpg", title: "Sports 1" },
       { src: "images/11.jpg", title: "Sports 2" },
@@ -47,7 +47,7 @@ const albumsData = [
   {
     id: "picnic",
     title: "Picnic",
-    cover: "images/12.jpg",
+    cover: "images/cover5.jpg",
     photos: [
       { src: "images/12.jpg", title: "Picnic 1" },
       { src: "images/13.jpg", title: "Picnic 2" },
