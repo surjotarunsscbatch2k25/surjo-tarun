@@ -758,3 +758,29 @@ footer {
     font-size: 1.4rem;
   }
 }
+
+
+.upload-access-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: rgba(14, 165, 233, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 50px;
+  color: #0284c7;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.1);
+}
+
+.upload-access-btn:hover {
+  background: rgba(14, 165, 233, 0.85);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.25);
+}
