@@ -1,1 +1,450 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Photos | Surjo Tarun</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.18);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --primary: #0ea5e9;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #1e293b;
+    }
+
+    .upload-container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 40px 32px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      color: #0284c7;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Password Section */
+    .password-section {
+      transition: all 0.4s ease;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(10px);
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+    }
+
+    .glass-btn {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      background: rgba(14, 165, 233, 0.85);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .glass-btn:hover {
+      background: rgba(2, 132, 199, 0.95);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+    }
+
+    .glass-btn:active {
+      transform: translateY(0);
+    }
+
+    .glass-btn.secondary {
+      background: rgba(255, 255, 255, 0.25);
+      color: #1e293b;
+      margin-top: 12px;
+    }
+
+    .glass-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Upload Section (hidden by default) */
+    .upload-section {
+      display: none;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .upload-section.active {
+      display: block;
+    }
+
+    .file-drop {
+      border: 2px dashed rgba(14, 165, 233, 0.4);
+      border-radius: 20px;
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .file-drop:hover,
+    .file-drop.dragover {
+      border-color: var(--primary);
+      background: rgba(14, 165, 233, 0.08);
+    }
+
+    .file-drop i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .file-drop p {
+      font-size: 15px;
+      color: #475569;
+    }
+
+    .file-drop span {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .preview-area {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .preview-area img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      display: none;
+      text-align: center;
+    }
+
+    .status.success {
+      background: rgba(34, 197, 94, 0.15);
+      color: #16a34a;
+      display: block;
+    }
+
+    .status.error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+      display: block;
+    }
+
+    .status.loading {
+      background: rgba(14, 165, 233, 0.15);
+      color: #0284c7;
+      display: block;
+    }
+
+    .uploaded-url {
+      margin-top: 12px;
+      word-break: break-all;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="upload-container">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> হোমে ফিরে যাও
+    </a>
+
+    <div class="header">
+      <h1>📸 Photo Upload</h1>
+      <p>Surjo Tarun • SSC Batch 2K25</p>
+    </div>
+
+    <!-- Password Section -->
+    <div class="password-section" id="passwordSection">
+      <div class="input-group">
+        <label>পাসওয়ার্ড দিন</label>
+        <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড লিখুন..." autocomplete="off">
+      </div>
+      <button class="glass-btn" id="checkPasswordBtn">
+        <i class="fas fa-lock"></i> প্রবেশ করুন
+      </button>
+      <div class="status error" id="passwordError" style="display: none;">
+        ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section" id="uploadSection">
+      <div class="file-drop" id="fileDrop">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>ছবি এখানে ক্লিক করুন বা ড্র্যাগ করুন</p>
+        <span>JPG, PNG (সর্বোচ্চ ১০MB)</span>
+      </div>
+      <input type="file" id="fileInput" accept="image/*">
+
+      <div class="preview-area" id="previewArea">
+        <img id="previewImage" src="" alt="Preview">
+        <button class="glass-btn" id="uploadBtn">
+          <i class="fas fa-upload"></i> আপলোড করুন
+        </button>
+        <button class="glass-btn secondary" id="cancelBtn">
+          বাতিল করুন
+        </button>
+      </div>
+
+      <div class="status" id="statusMsg"></div>
+      <div class="uploaded-url" id="uploadedUrl"></div>
+    </div>
+  </div>
+
+  <script>
+    // ========== Configuration ==========
+    const CLOUD_NAME = "anbyhu17";
+    const UPLOAD_PRESET = "surjo_tarun";
+    const CORRECT_PASSWORD = "Surjo@2k25ps";
+
+    // ========== DOM Elements ==========
+    const passwordSection = document.getElementById("passwordSection");
+    const uploadSection = document.getElementById("uploadSection");
+    const passwordInput = document.getElementById("passwordInput");
+    const checkPasswordBtn = document.getElementById("checkPasswordBtn");
+    const passwordError = document.getElementById("passwordError");
+
+    const fileDrop = document.getElementById("fileDrop");
+    const fileInput = document.getElementById("fileInput");
+    const previewArea = document.getElementById("previewArea");
+    const previewImage = document.getElementById("previewImage");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const statusMsg = document.getElementById("statusMsg");
+    const uploadedUrl = document.getElementById("uploadedUrl");
+
+    let selectedFile = null;
+
+    // ========== Password Check ==========
+    checkPasswordBtn.addEventListener("click", () => {
+      const entered = passwordInput.value.trim();
+      if (entered === CORRECT_PASSWORD) {
+        passwordSection.style.display = "none";
+        uploadSection.classList.add("active");
+        passwordError.style.display = "none";
+      } else {
+        passwordError.style.display = "block";
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+
+    // Enter key support
+    passwordInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") checkPasswordBtn.click();
+    });
+
+    // ========== File Selection ==========
+    fileDrop.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+      handleFile(e.target.files[0]);
+    });
+
+    // Drag & Drop
+    fileDrop.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      fileDrop.classList.add("dragover");
+    });
+
+    fileDrop.addEventListener("dragleave", () => {
+      fileDrop.classList.remove("dragover");
+    });
+
+    fileDrop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      fileDrop.classList.remove("dragover");
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    function handleFile(file) {
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        showStatus("শুধু ছবি আপলোড করা যাবে!", "error");
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        showStatus("ছবির সাইজ ১০MB এর কম হতে হবে!", "error");
+        return;
+      }
+
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImage.src = e.target.result;
+        previewArea.style.display = "block";
+        fileDrop.style.display = "none";
+        statusMsg.style.display = "none";
+        uploadedUrl.style.display = "none";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ========== Cancel ==========
+    cancelBtn.addEventListener("click", resetUpload);
+
+    function resetUpload() {
+      selectedFile = null;
+      fileInput.value = "";
+      previewArea.style.display = "none";
+      fileDrop.style.display = "block";
+      statusMsg.style.display = "none";
+      uploadedUrl.style.display = "none";
+    }
+
+    // ========== Upload to Cloudinary ==========
+    uploadBtn.addEventListener("click", async () => {
+      if (!selectedFile) return;
+
+      showStatus("আপলোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন", "loading");
+      uploadBtn.disabled = true;
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("upload_preset", UPLOAD_PRESET);
+
+      try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.secure_url) {
+          showStatus("সফলভাবে আপলোড হয়েছে!", "success");
+          uploadedUrl.style.display = "block";
+          uploadedUrl.innerHTML = `<strong>ছবির লিংক:</strong><br>${data.secure_url}`;
+          
+          // Reset after 2 seconds for next upload
+          setTimeout(() => {
+            resetUpload();
+            uploadBtn.disabled = false;
+          }, 2500);
+        } else {
+          throw new Error("Upload failed");
+        }
+      } catch (err) {
+        showStatus("আপলোড ব্যর্থ হয়েছে! আবার চেষ্টা করুন।", "error");
+        uploadBtn.disabled = false;
+      }
+    });
+
+    function showStatus(message, type) {
+      statusMsg.textContent = message;
+      statusMsg.className = `status ${type}`;
+      statusMsg.style.display = "block";
+    }
+  </script>
+</body>
+</html>
